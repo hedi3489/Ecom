@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 30, 2023 at 07:07 PM
+-- Generation Time: Nov 06, 2023 at 01:26 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `project_db`
+-- Database: `projectdb`
 --
 
 -- --------------------------------------------------------
@@ -28,35 +28,48 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `category` (
-  `CategoryId` int(2) NOT NULL,
+  `CategoryId` int(10) NOT NULL,
   `Name` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `comments`
+-- Table structure for table `comment`
 --
 
-CREATE TABLE `comments` (
-  `CommentId` int(15) NOT NULL,
-  `ProductId` int(15) NOT NULL,
-  `Comment` varchar(150) NOT NULL
+CREATE TABLE `comment` (
+  `CommentId` int(10) NOT NULL,
+  `BuyerId` int(10) NOT NULL,
+  `ProductId` int(10) NOT NULL,
+  `Comment` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `products`
+-- Table structure for table `product`
 --
 
-CREATE TABLE `products` (
-  `ProductId` int(15) NOT NULL,
+CREATE TABLE `product` (
+  `ProductId` int(10) NOT NULL,
   `SellerId` int(10) NOT NULL,
-  `CategoryId` int(10) NOT NULL,
-  `Description` varchar(150) NOT NULL,
+  `Name` varchar(150) NOT NULL,
+  `Category` int(2) NOT NULL,
   `Price` int(6) NOT NULL,
   `Quantity` int(3) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product-category`
+--
+
+CREATE TABLE `product-category` (
+  `Product-CategodyId` int(10) NOT NULL,
+  `ProductId` int(10) NOT NULL,
+  `CategoryId` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -66,12 +79,45 @@ CREATE TABLE `products` (
 --
 
 CREATE TABLE `transactions` (
-  `TransactionId` int(15) NOT NULL,
+  `TransactionId` int(10) NOT NULL,
   `BuyerId` int(10) NOT NULL,
-  `ProductId` int(15) NOT NULL,
-  `Quantity` int(2) NOT NULL,
-  `Date` datetime NOT NULL,
-  `TotalAmount` int(3) NOT NULL
+  `Date` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `transactionsdetail`
+--
+
+CREATE TABLE `transactionsdetail` (
+  `TransactionsDetailId` int(10) NOT NULL,
+  `TransactionsId` int(10) NOT NULL,
+  `ProductId` int(10) NOT NULL,
+  `Quantity` int(3) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user-userright`
+--
+
+CREATE TABLE `user-userright` (
+  `User-UserRightId` int(10) NOT NULL,
+  `UserRight` int(10) NOT NULL,
+  `UserId` int(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `userright`
+--
+
+CREATE TABLE `userright` (
+  `UserRightId` int(10) NOT NULL,
+  `Title` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -82,12 +128,11 @@ CREATE TABLE `transactions` (
 
 CREATE TABLE `users` (
   `UserId` int(10) NOT NULL,
-  `UserName` varchar(30) NOT NULL,
+  `Username` varchar(30) NOT NULL,
   `Email` varchar(30) NOT NULL,
   `Password` varchar(20) NOT NULL,
   `Address` varchar(40) NOT NULL,
-  `Phone` varchar(11) NOT NULL,
-  `Type` varchar(6) NOT NULL
+  `Phone` varchar(12) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -101,27 +146,55 @@ ALTER TABLE `category`
   ADD PRIMARY KEY (`CategoryId`);
 
 --
--- Indexes for table `comments`
+-- Indexes for table `comment`
 --
-ALTER TABLE `comments`
+ALTER TABLE `comment`
   ADD PRIMARY KEY (`CommentId`),
-  ADD KEY `Comments_ProductId_FK` (`ProductId`);
+  ADD KEY `Comments_Product_FK` (`ProductId`),
+  ADD KEY `Comment_User_FK` (`BuyerId`);
 
 --
--- Indexes for table `products`
+-- Indexes for table `product`
 --
-ALTER TABLE `products`
-  ADD PRIMARY KEY (`ProductId`),
-  ADD KEY `Product_SellerId_FK` (`SellerId`),
-  ADD KEY `Product_CategoryId_FK` (`CategoryId`);
+ALTER TABLE `product`
+  ADD PRIMARY KEY (`ProductId`);
+
+--
+-- Indexes for table `product-category`
+--
+ALTER TABLE `product-category`
+  ADD PRIMARY KEY (`Product-CategodyId`),
+  ADD KEY `PC_Product_FK` (`ProductId`),
+  ADD KEY `PC_Category_FK` (`CategoryId`);
 
 --
 -- Indexes for table `transactions`
 --
 ALTER TABLE `transactions`
   ADD PRIMARY KEY (`TransactionId`),
-  ADD KEY `Transaction_BuyerId_FK` (`BuyerId`),
-  ADD KEY `Transaction_ProductId_FK` (`ProductId`);
+  ADD KEY `Transaction_User_FK` (`BuyerId`);
+
+--
+-- Indexes for table `transactionsdetail`
+--
+ALTER TABLE `transactionsdetail`
+  ADD PRIMARY KEY (`TransactionsDetailId`),
+  ADD KEY `TD_TransactionId_FK` (`TransactionsId`),
+  ADD KEY `TD_Product_FK` (`ProductId`);
+
+--
+-- Indexes for table `user-userright`
+--
+ALTER TABLE `user-userright`
+  ADD PRIMARY KEY (`User-UserRightId`),
+  ADD KEY `UUR_UR_FK` (`UserRight`),
+  ADD KEY `UUR_User_FK` (`UserId`);
+
+--
+-- Indexes for table `userright`
+--
+ALTER TABLE `userright`
+  ADD PRIMARY KEY (`UserRightId`);
 
 --
 -- Indexes for table `users`
@@ -134,22 +207,52 @@ ALTER TABLE `users`
 --
 
 --
--- AUTO_INCREMENT for table `comments`
+-- AUTO_INCREMENT for table `category`
 --
-ALTER TABLE `comments`
-  MODIFY `CommentId` int(15) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `category`
+  MODIFY `CategoryId` int(10) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `products`
+-- AUTO_INCREMENT for table `comment`
 --
-ALTER TABLE `products`
-  MODIFY `ProductId` int(15) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `comment`
+  MODIFY `CommentId` int(10) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `product`
+--
+ALTER TABLE `product`
+  MODIFY `ProductId` int(10) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `product-category`
+--
+ALTER TABLE `product-category`
+  MODIFY `Product-CategodyId` int(10) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `transactions`
 --
 ALTER TABLE `transactions`
-  MODIFY `TransactionId` int(15) NOT NULL AUTO_INCREMENT;
+  MODIFY `TransactionId` int(10) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `transactionsdetail`
+--
+ALTER TABLE `transactionsdetail`
+  MODIFY `TransactionsDetailId` int(10) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `user-userright`
+--
+ALTER TABLE `user-userright`
+  MODIFY `User-UserRightId` int(10) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `userright`
+--
+ALTER TABLE `userright`
+  MODIFY `UserRightId` int(10) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -162,27 +265,40 @@ ALTER TABLE `users`
 --
 
 --
--- Constraints for table `comments`
+-- Constraints for table `comment`
 --
-ALTER TABLE `comments`
-  ADD CONSTRAINT `Comments_ProductId_FK` FOREIGN KEY (`ProductId`) REFERENCES `products` (`ProductId`);
+ALTER TABLE `comment`
+  ADD CONSTRAINT `Comment_User_FK` FOREIGN KEY (`BuyerId`) REFERENCES `users` (`UserId`),
+  ADD CONSTRAINT `Comments_Product_FK` FOREIGN KEY (`ProductId`) REFERENCES `product` (`ProductId`);
 
 --
--- Constraints for table `products`
+-- Constraints for table `product-category`
 --
-ALTER TABLE `products`
-  ADD CONSTRAINT `Product_CategoryId_FK` FOREIGN KEY (`CategoryId`) REFERENCES `category` (`CategoryId`),
-  ADD CONSTRAINT `Product_SellerId_FK` FOREIGN KEY (`SellerId`) REFERENCES `users` (`UserId`);
+ALTER TABLE `product-category`
+  ADD CONSTRAINT `PC_Category_FK` FOREIGN KEY (`CategoryId`) REFERENCES `category` (`CategoryId`),
+  ADD CONSTRAINT `PC_Product_FK` FOREIGN KEY (`ProductId`) REFERENCES `product` (`ProductId`);
 
 --
 -- Constraints for table `transactions`
 --
 ALTER TABLE `transactions`
-  ADD CONSTRAINT `Transaction_BuyerId_FK` FOREIGN KEY (`BuyerId`) REFERENCES `users` (`UserId`),
-  ADD CONSTRAINT `Transaction_ProductId_FK` FOREIGN KEY (`ProductId`) REFERENCES `products` (`ProductId`);
+  ADD CONSTRAINT `Transaction_User_FK` FOREIGN KEY (`BuyerId`) REFERENCES `users` (`UserId`);
+
+--
+-- Constraints for table `transactionsdetail`
+--
+ALTER TABLE `transactionsdetail`
+  ADD CONSTRAINT `TD_Product_FK` FOREIGN KEY (`ProductId`) REFERENCES `product` (`ProductId`),
+  ADD CONSTRAINT `TD_TransactionId_FK` FOREIGN KEY (`TransactionsId`) REFERENCES `transactions` (`TransactionId`);
+
+--
+-- Constraints for table `user-userright`
+--
+ALTER TABLE `user-userright`
+  ADD CONSTRAINT `UUR_UR_FK` FOREIGN KEY (`UserRight`) REFERENCES `userright` (`UserRightId`),
+  ADD CONSTRAINT `UUR_User_FK` FOREIGN KEY (`UserId`) REFERENCES `users` (`UserId`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-
