@@ -6,13 +6,16 @@
 </head>
 <body>
     <h1>Welcome to the Main Page</h1>
-    <div class="product-list">
-        <div class="product">
-            <h2>Product Name</h2>
-            <p>Price: $100</p>
-            <p>Category: Electronics</p>
-            <a href="Views/User/buy.php">Buy Now</a>
-        </div>
-    </div>
+            <?php
+            include_once "Models/Product.php";
+            $products = Product::listProducts();
+            foreach($products as $product){
+                echo "<table class='product'>";
+                echo "<tr><td>" . $product->getName() . "</td></tr>";
+                echo "<tr><td>" . $product->getPrice() . "</td></tr>";
+                echo "<tr><td>" . $product->getCategory() . "</tr></td>";
+                echo "<tr><td><a href='/?controller=product&action=view&id=". $product->getProductId() ."'>View</a></td></tr></table>";
+            }
+            ?>
 </body>
 </html>

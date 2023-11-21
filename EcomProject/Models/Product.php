@@ -16,11 +16,11 @@ class Product {
             $this->sellerId = 0;
             $this->name = "";
             $this->category = 0;
-            $this->price = 0;
+            $this->price = 0.0;
             $this->quantity = 0;
         } else {
             $id = $conn->real_escape_string($id);
-            $sql = "SELECT * FROM `products` WHERE `ProductId`='$id';";
+            $sql = "SELECT * FROM `product` WHERE `ProductId`='$id';";
             $res = $conn->query($sql);
             $assoc_prod = $res->fetch_assoc();
 
@@ -38,16 +38,18 @@ class Product {
     public static function listProducts() {
         global $conn;
         $list = array();
-        $sql = "SELECT * FROM `products`";
+        $sql = "SELECT * FROM `product`";
         $res = $conn->query($sql);
         while ($row = $res->fetch_assoc()) {
             $product = new Product();
             $product->productId = $row['ProductId'];
             $product->sellerId = $row['SellerId'];
             $product->name = $row['Name'];
-            $product->category = $row['Category'];
             $product->price = $row['Price'];
             $product->quantity = $row['Quantity'];
+
+            
+            $product->category = $product->getCategory($product->productId);
 
             array_push($list, $product);
         }
@@ -63,7 +65,7 @@ class Product {
         $category = $conn->real_escape_string($post['Category']);
         $price = $conn->real_escape_string($post['Price']);
         $quantity = $conn->real_escape_string($post['Quantity']);
-        $sql = "UPDATE `products` SET `SellerId` = '$sellerId', `Name` = '$name', `Category` = '$category', `Price` = '$price', `Quantity` = '$quantity' WHERE `ProductId` = '$productId'";
+        $sql = "UPDATE `product` SET `SellerId` = '$sellerId', `Name` = '$name', `Category` = '$category', `Price` = '$price', `Quantity` = '$quantity' WHERE `ProductId` = '$productId'";
         $conn->query($sql);
     }
     public static function showProductDetails() {
@@ -83,10 +85,66 @@ class Product {
         $category = $conn->real_escape_string($_POST['Category']);
         $quantity = $conn->real_escape_string($_POST['Quantity']);
 
-        $sql = "INSERT INTO `products` (`SellerId`, `Name`, `Category`, `Price`, `Quantity`) 
+        $sql = "INSERT INTO `product` (`SellerId`, `Name`, `Category`, `Price`, `Quantity`) 
                 VALUES ('$sellerId', '$name', '$category', '$price', '$quantity')";
         $conn->query($sql);
 
     }
+
+    public function getProductId(){
+        return $this->productId;
+    }
+    public function setProductId(){
+        
+    }
+    public function getSellerId(){
+        return $this->sellerId;
+    }
+    public function setSellerId(){
+        
+    }
+    public function getName(){
+        return $this->name;
+    }
+    public function setName(){
+        
+    }
+    public function getCategory($id=-1){
+        if($id<0){
+            return $this->category;
+        }else{
+            global $conn;
+            $sql = "SELECT * FROM `category` WHERE `CategoryId`='$id';";
+            $res = $conn->query($sql);
+            $categories = "";
+            while ($row = $res->fetch_assoc()){
+                $categories = $categories . $row["Name"];
+            }
+            return $categories;
+        }
+    }
+    public function setCategory(){
+        
+    }
+    public function getPrice(){
+        $formatPrice = 0.0;
+        if (strpos($this->price, '.')) {
+            $formatPrice = "$" . $this->price;
+        }else{
+            $formatPrice = "$" . $this->price .".00";
+        }
+        return $formatPrice; 
+        }
+
+    public function setPrice(){
+        
+    }
+    public function getQuantity(){
+        return $this->quantity;
+    }
+    public function setQuantity(){
+        
+    }
+
 }
 ?>

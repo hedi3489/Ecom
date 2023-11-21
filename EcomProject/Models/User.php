@@ -3,12 +3,12 @@
 require_once "mysqldatabase.php";
 
 class User {
-    private $userid;
-    private $username;
-    private $email;
-    private $password;
-    private $address;
-    private $phone;
+    public $userid;
+    public $username;
+    public $email;
+    public $password;
+    public $address;
+    public $phone;
 
     public function __construct($id = -1) {
         global $conn; 
@@ -73,24 +73,18 @@ class User {
         $conn->query($sql);
     }
 
-    public function index(){   
-    }
-
-    public function main(){
-        include_once "Views/User/main.php";
-    }
-
     public function validate() {
         global $conn;
-        var_dump($_POST);
-        $username = $_POST['username'];
-        $password = $_POST['password'];
-        $sql = "SELECT * FROM `users` WHERE `Username`='$username' AND 'Password'='$password';";
-        $result = $conn->query($sql);
-        var_dump($result);
-        if ($result->num_rows > 0) {
-            while ($row = $result->fetch_assoc()) {
-                $user = new User();
+        $sql = "SELECT * FROM `users` WHERE `Username` = ? AND `Password` = ?";
+        $stmt = $conn->prepare($sql);
+        $name = $_POST['username'];
+        $pass = $pass = $_POST['password'];
+        $stmt->bind_param("ss", $name, $pass);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $user = new User();
+        if ($result->num_rows > 0){
+            while($row = $result->fetch_assoc()) {
                 $user->userid = $row['UserId'];
                 $user->username = $row['Username'];
                 $user->email = $row['Email'];
@@ -98,13 +92,47 @@ class User {
                 $user->address = $row['Address'];
                 $user->phone = $row['Phone'];
             }
-            setcookie($username, time() + 86400, "/");
             return $user;
-        }else{
-            return -1;
         }
     }
-    
+
+    public function getId(){
+        return $this->userid;
+    }
+    public function setId(){
+        
+    }
+    public function getUsername(){
+        return $this->username;
+    }
+    public function setUsername(){
+        
+    }
+    public function getEmail(){
+        return $this->email;
+    }
+    public function setEmail(){
+        
+    }
+    public function getPhone(){
+        return $this->phone;
+    }
+    public function setPhone(){
+        
+    } 
+    public function getAddress(){
+        return $this->address;
+    }
+    public function setAddress(){
+        
+    } 
+    public function getPassword(){
+        return $this->password;
+    }
+    public function setPassword(){
+        
+    }    
+
     public function setUserRights(){
         // ADD USER (ID) TO THE USER-RIGHTS TABLE
     }

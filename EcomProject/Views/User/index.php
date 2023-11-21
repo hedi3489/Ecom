@@ -24,7 +24,7 @@ include_once "Models/User.php";
         <br>
         <div class="centre">
             <button type="submit">Register</button>
-            <p>Already have an account? <a href="./Views/User/login.php">Sign in</a></p>
+            <p>Already have an account? <a href="?controller=user&action=login">Sign in</a></p>
         </div>
     </form>
 </body>
