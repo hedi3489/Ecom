@@ -7,10 +7,9 @@ class User {
     public $username;
     public $email;
     public $password;
-    public $address;
     public $phone;
 
-    public function __construct($id = -1) {
+    public function __construct($id=-1) {
         global $conn; 
         if ($id<0) {
             // CREATING NEW USER
@@ -56,6 +55,10 @@ class User {
         return $list;
     }
 
+    public function index(){
+        echo "";
+    }
+
     public function update($post) {
         global $conn;
         $userId = $this->userid;
@@ -73,12 +76,28 @@ class User {
         $conn->query($sql);
     }
 
+    public function register(){
+        global $conn;
+        $sql = "";
+        $name = $_POST['username'];
+        $pass = $_POST['password'];
+        $method = $_POST['method'];
+        if(is_numeric($_POST['method'])){
+            $sql = "INSERT INTO `users`(`UserId`, `Username`, `Email`, `Password`, `Phone`) VALUES ('NULL','$name','NULL','$pass','$method')";
+        }else{
+            $sql = "INSERT INTO `users`(`UserId`, `Username`, `Email`, `Password`, `Phone`) VALUES ('NULL','$name','$method','$pass','NULL')";
+        }
+        $user = $conn->query($sql);
+        include_once "Views/User/main.php";
+        return "";
+    }
+
     public function validate() {
         global $conn;
         $sql = "SELECT * FROM `users` WHERE `Username` = ? AND `Password` = ?";
         $stmt = $conn->prepare($sql);
         $name = $_POST['username'];
-        $pass = $pass = $_POST['password'];
+        $pass = $_POST['password'];
         $stmt->bind_param("ss", $name, $pass);
         $stmt->execute();
         $result = $stmt->get_result();
@@ -89,7 +108,6 @@ class User {
                 $user->username = $row['Username'];
                 $user->email = $row['Email'];
                 $user->password = $row['Password'];
-                $user->address = $row['Address'];
                 $user->phone = $row['Phone'];
             }
             return $user;

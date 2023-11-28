@@ -4,11 +4,14 @@ class UserController {
    
     function route(){
         $action = (isset($_GET['action'])) ? $_GET['action'] : 'index';
-        $user = new User(); 
-        $data = "";
-        if($action=='validate'){
+        $user = new User();
+        if($action=='login'){
+            $data = "";
+        }else{ 
             $data = $user->$action();
-            $action = ($data==null) ? 'login' : 'main';
+            if($action=='validate'){
+                $action = ($data==null) ? 'login' : 'main';
+            }
         }
         $this->render($action, array($data));
     }

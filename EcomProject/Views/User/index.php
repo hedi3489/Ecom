@@ -6,26 +6,21 @@ include_once "Models/User.php";
 <head>
     <title>Login</title>
     <link rel="stylesheet" href="Views/styles.css" type="text/css">
+    <script src="script.js"></script>
 </head>
 <body>
     <h1>Register</h1>
-    <form action="?controller=user&action=validate&id=1"method="post">
+    <form action="?controller=user&action=register"method="post">
         <label for="username">Username:</label>
-        <input type="text" id="username" required value="<?php if(isset($_COOKIE["username"])) { echo $_COOKIE["username"]; } ?>">
-        <br>
-        <label for="username">Mobile number or email:</label>
-        <input type="text" id="username">
-        <br>
+        <input type="text" id="username" name="username" required>
+        <label for="method">Mobile number or email:</label>
+        <input type="text" id="method" name="method" required>
         <label for="password">Password:</label>
-        <input type="password" id="password1" required value="<?php if(isset($_COOKIE["password"])) { echo $_COOKIE["password"]; } ?>">
-        <br>
+        <input type="password" id="password" name="password" required>
         <label for="password">Confirm Password:</label>
-        <input type="password" id="password2" required value="<?php if(isset($_COOKIE["password"])) { echo $_COOKIE["password"]; } ?>">
-        <br>
-        <div class="centre">
-            <button type="submit">Register</button>
-            <p>Already have an account? <a href="?controller=user&action=login">Sign in</a></p>
-        </div>
+        <input type="password" id="confirm-password" name="confirm-password" required>
+        <button type="submit">Register</button>
+        <p>Already have an account? <a href="?controller=user&action=login">Sign in</a></p>
     </form>
 </body>
 </html>

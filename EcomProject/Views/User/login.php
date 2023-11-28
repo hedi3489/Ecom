@@ -8,14 +8,11 @@
     <h1>Login</h1>
     <form action="?controller=user&action=validate"method="post">
         <label for="username">Username:</label>
-        <input type="text" id="username" name="username"><br>
+        <input type="text" id="username" name="username" required><br>
         <label for="password">Password:</label>
-        <input type="password" id="password" name="password"><br>
+        <input type="password" id="password" name="password" required><br>
         <button type="submit">Login</button>
     </form>
-    <?php 
-    var_dump($_POST);
-    ?>
 </body>
 </html>
 
