@@ -1,0 +1,105 @@
+html {
+    height: 100%;
+    width: 100%;
+}
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f2f2f2;
+    height: 100%;
+}
+.container {
+    width: 240px;
+    height: 360px;
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    margin-left: 10px;
+    float: left;
+    position: relative;
+}
+.image-container {
+    color: black;
+    max-width: 220px; 
+    overflow: hidden;
+    border-radius: 5px;
+    float: top;
+}
+.image-container img {
+    max-height: 100%;
+    max-width: 100%;
+    display: block; 
+    overflow: hidden;
+}
+.detail-container {
+    max-width: 100%;
+    overflow: hidden;
+}
+form {
+    width: 20%;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    position: absolute;
+    top: 15%;
+    left: 39%;
+}
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+button{
+    background-color: #333;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    position: relative;
+    bottom: 0;
+}
+.container-list {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.product {
+    background-color: #fff;
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: calc(33.33% - 20px);
+    box-sizing: border-box;
+}
+.container p {
+    margin: 5px 0;
+    max-height: 73px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.container a {
+    display: block;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 5px;
+    border-radius: 5px;
+    text-decoration: none;
+    position: relative;
+    bottom: -5;
+}
+.sidebar{
+    float: left;
+    min-height: 100%;
+    position: relative;
+    width: 15%;
+    border: 1px solid black;
+}
+.content {
+    padding-bottom: 100px; 
+}

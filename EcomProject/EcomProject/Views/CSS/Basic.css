@@ -1,0 +1,134 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f2f2f2;
+}
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+h1 {
+    background-color: #333;
+    color: #fff;
+    margin: 0px;
+    padding-top: 35px;
+    padding-bottom: 35px;
+    text-align: center;
+}
+form {
+    width: 20%;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    position: absolute;
+    top: 15%;
+    left: 39%;
+}
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+input[type="text"],
+input[type="password"],
+input[type="number"],
+select {
+    width: 91%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    float: center;
+}
+button{
+    background-color: #333;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.product-list {
+    display: flex;
+    flex-wrap: wrap;
+}
+.product h2 {
+    font-size: 18px;
+    margin: 0;
+}
+.product p {
+    margin: 5px 0;
+}
+.product a {
+    display: block;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 5px;
+    border-radius: 5px;
+    text-decoration: none;
+}
+.comments {
+    background-color: #fff;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+.comment {
+    border-bottom: 1px solid #ccc;
+    padding: 10px 0;
+}
+.comment p {
+    margin: 5px 0;
+}
+.cart {
+    background-color: #fff;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+.cart-item {
+    border-bottom: 1px solid #ccc;
+    padding: 10px 0;
+}
+.cart-item p {
+    margin: 5px 0;
+}
+nav {
+    width: 100%;
+    border: 1px solid black;
+    margin-bottom: 0.8%;
+    margin-right: 0.5%;
+    overflow: hidden;
+    padding: 5px;
+    background-color: orange;
+}
+nav > a {
+    position: relative;
+    padding: 50px;
+    text-decoration: none;
+    color: #fff;
+    text-align: center;
+}
+nav > input {
+    width: 15%;
+}
+nav > img {
+    position: absolute;
+    right: 40px;
+    top: 17px;
+    height: 70px;
+    background-color: white;
+    border-radius: 15px;
+    border: 2px solid black;
+}
+.sidebar > label {
+    text-align: center;
+    position: relative;
+    top: 30px;
+    padding-top: 30px;
+}
