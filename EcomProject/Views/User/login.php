@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>Login</title>
-    <link rel="stylesheet" href="Views/styles.css" type="text/css">
+    <link rel="stylesheet" href="Views/CSS/Basic.css" type="text/css">
 </head>
 <body>
     <h1>Login</h1>

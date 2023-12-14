@@ -5,7 +5,7 @@ include_once "Models/User.php";
 <html>
 <head>
     <title>Login</title>
-    <link rel="stylesheet" href="Views/styles.css" type="text/css">
+    <link rel="stylesheet" href="Views/CSS/Basic.css" type="text/css">
     <script src="script.js"></script>
 </head>
 <body>

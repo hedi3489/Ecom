@@ -1,13 +1,12 @@
-
 <?php
 require_once "mysqldatabase.php";
-
+include_once "Views/session.php";
 class User {
-    public $userid;
-    public $username;
-    public $email;
-    public $password;
-    public $phone;
+    private $userid;
+    private $username;
+    private $email;
+    private $password;
+    private $phone;
 
     public function __construct($id=-1) {
         global $conn; 
@@ -30,7 +29,7 @@ class User {
                 $this->username = $assoc_user['Username'];
                 $this->email = $assoc_user['Email'];
                 $this->password = $assoc_user['Password'];
-                $this->address = $assoc_user['Address'];
+                //$this->address = $assoc_user['Address'];
                 $this->phone = $assoc_user['Phone'];
             }
         }
@@ -56,9 +55,11 @@ class User {
     }
 
     public function index(){
-        echo "";
+        
     }
-
+    public function login(){
+        
+    }
     public function update($post) {
         global $conn;
         $userId = $this->userid;
@@ -80,7 +81,7 @@ class User {
         global $conn;
         $sql = "";
         $name = $_POST['username'];
-        $pass = $_POST['password'];
+        $pass = md5($_POST['password']);
         $method = $_POST['method'];
         if(is_numeric($_POST['method'])){
             $sql = "INSERT INTO `users`(`UserId`, `Username`, `Email`, `Password`, `Phone`) VALUES ('NULL','$name','NULL','$pass','$method')";
@@ -88,8 +89,7 @@ class User {
             $sql = "INSERT INTO `users`(`UserId`, `Username`, `Email`, `Password`, `Phone`) VALUES ('NULL','$name','$method','$pass','NULL')";
         }
         $user = $conn->query($sql);
-        include_once "Views/User/main.php";
-        return "";
+
     }
 
     public function validate() {
@@ -97,7 +97,7 @@ class User {
         $sql = "SELECT * FROM `users` WHERE `Username` = ? AND `Password` = ?";
         $stmt = $conn->prepare($sql);
         $name = $_POST['username'];
-        $pass = $_POST['password'];
+        $pass = md5($_POST['password']);
         $stmt->bind_param("ss", $name, $pass);
         $stmt->execute();
         $result = $stmt->get_result();
@@ -110,7 +110,9 @@ class User {
                 $user->password = $row['Password'];
                 $user->phone = $row['Phone'];
             }
+            $_SESSION['userid'] = $user->getId();
             return $user;
+
         }
     }
 
