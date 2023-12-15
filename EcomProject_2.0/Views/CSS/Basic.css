@@ -1,0 +1,126 @@
+html {
+    height: 100%;
+    width: 100%;
+}
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f2f2f2;
+    height: 100%;
+    width: 100%;
+}
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+h1 {
+    background-color: #231f2a;
+    color: #fff;
+    margin: 0px;
+    padding: 25px 0px 25px 0px;
+    text-align: center;
+}
+form {
+    width: 20%;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    position: absolute;
+    top: 15%;
+    left: 39%;
+}
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+input[type="text"],
+input[type="password"],
+input[type="number"] {
+    width: 91%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    float: center;
+}
+button{
+    background-color: #333;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.product-list {
+    display: flex;
+    flex-wrap: wrap;
+}
+.product h2 {
+    font-size: 18px;
+    margin: 0;
+}
+.product p {
+    margin: 5px 0;
+}
+.product a {
+    display: block;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 5px;
+    border-radius: 5px;
+    text-decoration: none;
+}
+.comments {
+    background-color: #fff;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+.comment {
+    border-bottom: 1px solid #ccc;
+    padding: 10px 0;
+}
+.comment p {
+    margin: 5px 0;
+}
+nav {
+    max-width: 100%;
+    border: 1px solid black;
+    margin-bottom: 0.8%;
+    
+    overflow: hidden;
+    padding: 5px;
+    background-color: orange;
+}
+nav > a, .buy-button a {
+    position: relative;
+    padding-right: 50px;
+    padding-left: 50px;
+    text-decoration: none;
+    color: #fff;
+    text-align: center;
+}
+nav > input {
+    width: 25%;
+    border-radius: 8px;
+    font-size: large;
+}
+nav > .cartlink {
+    position: absolute;
+    right: 00px;
+    top: 0px;
+}
+nav > .cartlink > img{
+    position: absolute;
+    right: 40px;
+    top: 6px;
+    height: 70px;
+    background-color: white;
+    border-radius: 15px;
+    border: 2px solid black;
+}
